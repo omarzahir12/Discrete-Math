@@ -1,0 +1,192 @@
+\documentclass[11pt,fleqn]{article}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{url}
+\usepackage{color}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning,arrows}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\labelenumii}{\theenumii.}
+\renewcommand{\labelenumiii}{\theenumiii.}
+\newcommand{\be}{\begin{enumerate}}
+	\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bi}{\begin{itemize}}
+	\newcommand{\ei}{\end{itemize}}
+\newcommand{\bc}{\begin{center}}
+	\newcommand{\ec}{\end{center}}
+\newcommand{\bsp}{\begin{sloppypar}}
+	\newcommand{\esp}{\end{sloppypar}}
+\newcommand{\mname}[1]{\mbox{\sf #1}}
+\newcommand{\sB}{\mbox{$\cal B$}}
+\newcommand{\sC}{\mbox{$\cal C$}}
+\newcommand{\sF}{\mbox{$\cal F$}}
+\newcommand{\sM}{\mbox{$\cal M$}}
+\newcommand{\sP}{\mbox{$\cal P$}}
+\newcommand{\sV}{\mbox{$\cal V$}}
+\newcommand{\set}[1]{{\{ #1 \}}}
+\newcommand{\Neg}{\neg}
+\ifdefined \And
+\renewcommand{\And}{\wedge}
+\else
+\newcommand{\And}{\wedge}
+\fi
+\newcommand{\Or}{\vee}
+\newcommand{\Implies}{\Rightarrow}
+\newcommand{\Iff}{\LeftRightarrow}
+\newcommand{\Forall}{\forall}
+\newcommand{\ForallApp}{\forall\,}
+\newcommand{\Forsome}{\exists}
+\newcommand{\ForsomeApp}{\exists\,}
+\newcommand{\mdot}{\mathrel.}
+\newcommand{\eps}{\epsilon}
+\newcommand{\pnote}[1]{\langle \mbox{#1} \rangle}
+
+
+\begin{document}
+
+\begin{center}
+
+{\large \textbf{COMPSCI/SFWRENG 2FA3}}\\[2mm]
+{\large \textbf{Discrete Mathematics with Applications II}}\\[2mm]
+{\large \textbf{Winter 2021}}\\[8mm]
+{\huge \textbf{Assignment 9}}\\[6mm]
+{\large \textbf{Dr.~William M. Farmer and Dr.~Mehrnoosh Askarpour}}\\[2mm]
+{\large \textbf{McMaster University}}\\[6mm]
+{\large Revised: March 28, 2021}
+
+\end{center}
+
+\medskip
+
+Assignment 9 consists of two problems.  You must write your solutions
+to the problems using LaTeX.
+
+Please submit Assignment~9 as two files,
+\texttt{Assignment\_9\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_9\_\emph{YourMacID}.pdf}, to the Assignment~9
+folder on Avenue under Assessments/Assignments.
+\texttt{\emph{YourMacID}} must be your personal MacID (written without
+capitalization).  The \texttt{Assignment\_9\_\emph{YourMacID}.tex}
+file is a copy of the LaTeX source file for this assignment
+(\texttt{Assignment\_9.tex} found on Avenue under
+Contents/Assignments) with your solution entered after each problem.
+The \texttt{Assignment\_9\_\emph{YourMacID}.pdf} is the PDF output
+produced by executing
+
+\begin{itemize}
+
+  \item[] \texttt{pdflatex Assignment\_9\_\emph{YourMacID}}
+
+\end{itemize}
+
+This assignment is due \textbf{Sunday, April 4, 2021 before
+  midnight.}  You are allow to submit the assignment multiple times,
+but only the last submission will be marked.  \textbf{Late submissions
+  and files that are not named exactly as specified above will not be
+  accepted!}  It is suggested that you submit your preliminary
+\texttt{Assignment\_9\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_9\_\emph{YourMacID}.pdf} files well before the
+deadline so that your mark is not zero if, e.g., your computer fails
+at 11:50 PM on April 4.
+
+\textbf{Although you are allowed to receive help from the
+  instructional staff and other students, your submission must be your
+  own work.  Copying will be treated as academic dishonesty! If any of
+  the ideas used in your submission were obtained from other students
+  or sources outside of the lectures and tutorials, you must
+  acknowledge where or from whom these ideas were obtained.}
+
+\newpage
+
+\subsection*{Problems}
+
+\be
+
+  \item \textbf{[10 points]} Let $\Sigma = \set{a,b}$ and \[L = \set{x
+    \in \Sigma^* \mid \#a(x) \text{ and } \#b(x) \text{ are both
+      even}}.\] Construct a total Turing machine that accepts $L$.
+    Present the TM using a transition table or diagram formally, and
+    describe how it works informally.
+
+  \textcolor{blue}{\textbf{Mohammad Omar Zahir, zahirm1, April 4, 2021}}
+    
+    $M = (Q,\Sigma,\Gamma,\vdash,\sqcup,\delta,S,t,r) \;
+    \mname{where:}\\
+    Q = \{S,q_1,q_2,q_3,t,r\}\\ 
+    \Sigma = \{a,b\}\\
+    \Gamma = \{a,b,\vdash,\sqcup,x\}\\
+    $\\
+  \begin{tabular}{| l | l | l | l | l | p{2.4cm} |}
+        \hline
+        \textbf{} & $\vdash$ & $a$ & $b$ & $x$ & $\sqcup$\\
+        \hline
+        $S$ & $(S,\: \vdash,\:R)$ & $(q_1,\: x,\:R)$ & $(q_2,\:x,\:R)$ & $(S,x,R)$ & $(t,\:-,\:-)$\\
+        \hline
+        $q_1$ & $-$ & $(q_3,\: x,\:L)$ & $(q_1,\:b,\:R)$ & $(q_1,x,R)$ & $(r,\:-,\:-)$\\
+        \hline
+        $q_2$ & $-$ & $(q_2,\: a,\:R)$ & $(q_3,\:x,\:L)$ & $(q_2,x,R)$ & $(r,\:-,\:-)$\\
+        \hline
+        $q_3$ & $(S,\vdash,R)$ & $(q_3,\: a,\:L)$ & $(q_3,\:b,\:L)$ & $(q_3,x,L)$ & $-$\\
+        \hline
+        $t$ & $(t,\vdash,R)$ & $(t,-,-)$ & $(t,-,-)$ & $(t,-,-)$ & $(t,-,-)$\\
+        \hline
+        $r$ & $(r,\vdash,R)$ & $(r,-,-)$ & $(r,-,-)$ & $(r,-,-)$ & $(r,-,-)
+        $\\
+        \hline
+  \end{tabular}
+
+\medskip
+
+  We begin in the starting state $S$ where we will begin accepting letters. If we reach the end of the word, that would mean that we have satisfied the condition of the language, as both $a$ and $b$ are at an even number of 0 times. If for example we get an $a$ or a $b$ at $S$, we will be at an odd number of $a$ or $b$, and we will send each to either $q_1$ or $q_2$, with each representing an odd number of $a$ and $b$ respectively. From this state we will continue moving forward, ignoring any $b$ or $x$ we come across for $q1$, and any $a$ or $x$ that we come across for $q_2$. Once we get another $a$ or $b$ for $q_1$ and $q_2$ respectively, that would mean that we now have an even number of $a$ or $b$, meaning the condition of the word is satisfied until now, which would be represented by the $q_3$ state which represents an even number of $a$ or $b$. Alternatively, if we reach the end of the word $\sqcup$ from the either $q_1$ or $q_2$, that would mean that we have an uneven number of the corresponding letter, meaning the word cannot be accepted and will go to the rejection state $r$. From $q_3$ we will then move back on the tape until we reach the beginning of the word, $\vdash$, putting us in state $S$ so we begin the same process over. If we move right from $S$ and we come across any $x$, we can ignore them as they would represent a matched letter of $a$ or $b$ somewhere else in the word. Alternatively, from $S$ if we reach the end of the word $\sqcup$ only passing $x$'s, that would mean that every letter has been matched with another letter, occurring an even number of times. Thus we could simply move to the accepting state $t$ in that situation to accept the string. 
+
+  \item \textbf{[10 points]} Let $\Sigma = \set{a,b}$ and \[L = \set{x
+    \in \Sigma^* \mid \#a(x) = \#b(x)}.\] Construct a total Turing
+    machine that accepts $L$.  Present the TM using a transition table
+    or diagram formally, and describe how it works informally.
+
+  \bigskip
+
+  \textcolor{blue}{\textbf{Mohammad Omar Zahir, zahirm1, April 4, 2021}}
+
+  $M = (Q,\Sigma,\Gamma,\vdash,\sqcup,\delta,S,t,r)\;
+    \mname{where:}\\
+    Q = \{S,q_1,q_2,q_3,t,r\}\\ 
+    \Sigma = \{a,b\}\\
+    \Gamma = \{a,b,\vdash,\sqcup,x\}\\
+    $
+
+  \begin{tabular}{| l | l | l | l | l | p{2.4cm} |}
+        \hline
+        \textbf{} & $\vdash$ & $a$ & $b$ & $x$ & $\sqcup$\\
+        \hline
+        $S$ & $(S,\: \vdash,\:R)$ & $(q_1,\: x,\:R)$ & $(q_2,\:x,\:R)$ & $(S,x,R)$ & $(t,\:-,\:-)$\\
+        \hline
+        $q_1$ & $-$ & $(q_1,\: a,\:R)$ & $(q_3,\:x,\:L)$ & $(q_1,x,R)$ & $(r,\:-,\:-)$\\
+        \hline
+        $q_2$ & $-$ & $(q_3,\: x,\:L)$ & $(q_2,\:b,\:R)$ & $(q_2,x,R)$ & $(r,\:-,\:-)$\\
+        \hline
+        $q_3$ & $(S,\vdash,R)$ & $(q_3,\: a,\:L)$ & $(q_3,\:b,\:L)$ & $(q_3,x,L)$ & $-$\\
+        \hline
+        $t$ & $(t,\vdash,R)$ & $(t,-,-)$ & $(t,-,-)$ & $(t,-,-)$ & $(t,-,-)$\\
+        \hline
+        $r$ & $(r,\vdash,R)$ & $(r,-,-)$ & $(r,-,-)$ & $(r,-,-)$ & $(r,-,-)
+        $\\
+        \hline
+  \end{tabular}
+  
+    \medskip
+
+  We begin in the start state $S$, where we can either read an $a$ or a $b$, which will then correspondingly go to the states $q_1$ and $q_2$, respectively. These states represent an unmatched $b$ for an $a$, and an unmatched $a$ for a $b$ respectively. From here we will continue moving forward until $q_1$ finds a $b$ towards the right, or $q_2$ finds an $a$ towards the right, to which it will go to $q_3$, which respresents a matched number of $a$'s and $b$'s. If we are in $q_1$ or $q_2$ and we do not find the corresponding letter and reach the end of the word, or $\sqcup$, that would imply that the $a$ does not have a matching $b$, or a $b$ does not have a matching $a$, meaning the number of $a$ and $b$ in the word is not the same. We would thus go from $q_1$ or $q_2$ in this position to the rejection state $r$. Otherwise, we then move backwards from $q_3$ until we reach the start symbol, staying at $q_3$ for anything else. Once at the start symbol, we will then begin the cycle described above again for if we get an $a$ or a $b$, or simply stay in $S$ if we get an $x$. The word is accepted, however, when we are back at the start state and we make it to the end of the word, or $\sqcup$, which would imply there are no more $a$'s or $b$'s, and we stayed at $S$ if there were $x$'s. Hence, that would mean that all the $a$'s and $b$'s have been matched thus far and if we reach the end of the input, we can go to the accepting state, $t$.
+
+\ee
+
+\end{document}

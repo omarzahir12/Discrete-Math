@@ -1,0 +1,159 @@
+\documentclass[11pt,fleqn]{article}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+\usepackage{amsmath,graphics}
+\usepackage{amssymb}
+\usepackage{color}
+
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning,arrows}
+
+
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\labelenumii}{\theenumii.}
+\renewcommand{\labelenumiii}{\theenumiii.}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\bsp}{\begin{sloppypar}}
+\newcommand{\esp}{\end{sloppypar}}
+\newcommand{\mname}[1]{\mbox{\sf #1}}
+\newcommand{\sB}{\mbox{$\cal B$}}
+\newcommand{\sC}{\mbox{$\cal C$}}
+\newcommand{\sE}{\mbox{$\cal E$}}
+\newcommand{\sF}{\mbox{$\cal F$}}
+\newcommand{\sL}{\mbox{$\cal L$}}
+\newcommand{\sM}{\mbox{$\cal M$}}
+\newcommand{\sP}{\mbox{$\cal P$}}
+\newcommand{\sV}{\mbox{$\cal V$}}
+\newcommand{\set}[1]{{\{ #1 \}}}
+\newcommand{\Neg}{\neg} 
+\ifdefined \And 
+\renewcommand{\And}{\wedge}
+\else
+\newcommand{\And}{\wedge}
+\fi
+\newcommand{\Or}{\vee}
+\newcommand{\Implies}{\Rightarrow}
+\newcommand{\Iff}{\Leftrightarrow}
+\newcommand{\Forall}{\forall}
+\newcommand{\ForallApp}{\forall\,}
+\newcommand{\Forsome}{\exists}
+\newcommand{\ForsomeApp}{\exists\,}
+\newcommand{\mdot}{\mathrel.}
+
+\begin{document}
+
+\begin{center}
+
+  {\large \textbf{COMPSCI/SFWRENG 2FA3}}\\[2mm]
+  {\large \textbf{Discrete Mathematics with Applications II}}\\[2mm]
+  {\large \textbf{Winter 2021}}\\[8mm]
+  {\huge \textbf{Extra Credit Assignment 3}}\\[6mm]
+{\large \textbf{Dr.~William M. Farmer and Dr.~Mehrnoosh Askarpour}}\\[2mm]
+  {\large \textbf{McMaster University}}\\[6mm]
+  {\large Revised: March 6, 2021}
+
+\end{center}
+
+\medskip
+
+Extra Credit Assignment 3 consists of three problems concerning Kleene
+algebas.  You must write your solution to the problem using LaTeX.
+
+\bsp
+Please submit Extra Credit Assignment~3 as two files,
+\texttt{EC\_Assignment\_3\_\emph{YourMacID}.tex} and
+\texttt{EC\_Assignment\_3\_\emph{YourMacID}.pdf}, to the Extra Credit
+Assignment~3 folder on Avenue under Assessments/Assignments.
+\texttt{\emph{YourMacID}} must be your personal MacID (written without
+capitalization).  The \texttt{EC\_Assignment\_3\_\emph{YourMacID}.tex}
+file is a copy of the LaTeX source file for this assignment
+(\texttt{EC\_Assignment\_3.tex} found on Avenue under
+Contents/Assignments) with your solution entered after the problem.
+The \texttt{EC\_Assignment\_3\_\emph{YourMacID}.pdf} is the PDF output
+produced by executing
+\esp
+
+\begin{itemize}
+
+  \item[] \texttt{pdflatex EC\_Assignment\_3\_\emph{YourMacID}}
+
+\end{itemize}
+
+This assignment is due \textbf{Sunday, March 14, 2021 before
+	midnight.} You are allow to submit the assignment multiple times,
+but only the last submission will be marked.  \textbf{Late submissions
+  and files that are not named exactly as specified above will not be
+  accepted!}  It is suggested that you submit your preliminary
+\texttt{EC\_Assignment\_3\_\emph{YourMacID}.tex} and
+\texttt{EC\_Assignment\_3\_\emph{YourMacID}.pdf} files well before the
+deadline so that your mark is not zero if, e.g., your computer fails
+at 11:50 PM on March 14.
+
+\textbf{Although you are allowed to receive help from the
+  instructional staff and other students, your submission must be your
+  own work.  Copying will be treated as academic dishonesty! If any of
+  the ideas used in your submission were obtained from other students
+  or sources outside of the lectures and tutorials, you must
+  acknowledge where or from whom these ideas were obtained.}
+
+\newpage
+\subsection*{Background}
+
+\be  
+
+\item A two-tape deterministic finite automata (2-DFA) is a deterministic finite state automata that instead of only one input tape, has two input tapes and accepts pairs of strings. Its set of states has two subsets.
+For example,  2-DFA A below accepts $L(A) =\{(w_1,w_2) \in \{a,b\}^* \times \{a,b\}^* | \ |w_1| = 2\cdot|w_2| \}$ which is a languages of pairs of strings where the first one  is two times longer than the second one.
+for example, then $(``bab", ``abbaba" )$ is an acceptable pair in $L(A)$.\\
+%{\centering	\scalebox{.4}{ \includegraphics{ec-assign-3-fig}}}
+
+Formally, a 2-DFA is defined with a tuple $M = (Q,\Sigma,\sigma,s,F) $ where:
+$Q = Q_1 \cup  Q_2$ and  $Q = Q_1 \bigcap  Q_2 =  \emptyset$. \\
+Depending on the current state, the input is read from on of the input tapes; if the current state is $q$ and $q \in Q_1$ then a symbol is read from tape 1, otherwise if $q \in Q_2$ then a symbol is read from tape 2.
+%When symbol $i$ is read from the first input tape, a transition such as $\sigma(q, i) = q'$ is triggered where $q \in Q_1$.\\
+%When symbol $i$ is read from the second input tape, a transition such as $\sigma(q, i) = q'$ is triggered where $q \in Q_2$.
+\ee
+
+\subsection*{Extra Credit Problem [2 bonus points]}
+
+\be
+
+\item  Define a 2-DFA for the following language: all pairs of strings $(w_1,w_2)$ in $\{a,b\}^* \times \{a,b\}^*$ such that the length of $w_2$ is twice the number of a's in $w_1$ plus three times the number of b's in $w_1$.
+
+
+\item Compare the computational power of DFA and 2-DFA, and explain why one might be able to accept languages that the other one cannot? Justify your answer.
+
+\ee
+
+\noindent
+\textcolor{blue}{\textbf{Mohammad Omar Zahir, zahirm1, March 21, 2021}}
+    \begin{enumerate}
+        \item The constructed 2-DFA is below. It is to be noted that the single state on the top, $q_0$ is a part of $Q_1$, and the three states on the bottom, right, and left, $q_1$, $q_2$, and $q_3$ make up $Q_2$, respectively. We can see that when we accept a $b$ from the first tape, we must accept any three more letters from the second tape. Similarly, when we accept an $a$ from the first tape, we must accept at least two more letters from the second tape before the word can be accepted.
+        \begin{center}
+        \begin{tikzpicture}[]
+            \node[initial,thick,accepting,state] at (-2.95,2.25) (c24db143) {$q_0$};
+            \node[thick,state] at (-5.3,-0.025) (15cb96dc) {$q_3$};
+            \node[thick,state] at (-0.8,-0.1) (33d79399) {$q_2$};
+            \node[thick,state] at (-3.075,-2.225) (01380406) {$q_1$};
+            \path[->, thick, >=stealth]
+            (c24db143) edge [left,in = 45, out = -136] node {$b$} (15cb96dc)
+            (c24db143) edge [left,in = 88, out = -92] node {$a$} (01380406)
+            (15cb96dc) edge [left,in = 136, out = -46] node {$a,b$} (01380406)
+            (33d79399) edge [right,in = -48, out = 132] node {$a,b$} (c24db143)
+            (01380406) edge [right,in = -136, out = 43] node {$a,b$} (33d79399)
+            ;
+        \end{tikzpicture}
+        \end{center}
+        \newpage
+        \item The advantage that the 2DFA has over the regular DFA is the fact that it allows for the reading of two separate input tapes, meaning that the 2DFA allows for the possibility of making a word from one input tape to conform and adapt to the other. This is starkly different from that of a regular DFA where we can only accept a single word from a single input tape. With the 2DFA, as we can see in the example above, we can clearly base the acceptance of one word on the other. The acceptance of the amount of letters in the second word was designed directly based on the types of letters accepted by the first word. While it is important to note that the addition of a second input tape, and consecutively a 2DFA, does not necessarily have more computational power than a regular DFA, as they both have finite memory. That being said, the fact that the 2DFA accepts inputs from two separate input tapes means that we have an extra capability of creating machines that can interact based on multiple inputs, and would better model a more practical purpose in the real-world, where multiple areas of input can affect the single output that we obtain. A 2DFA, as a result, can be argued to have more computational power and the possibility of accepting everything that a regular DFA can, as well as the added benefit as described above. As stated, a 2DFA behaves a step more closer to a modern computer or embedded system that decides its final state or output by the inputs that it takes from multiple facets, which in our case are other input tapes in the 2DFA.
+    \end{enumerate}
+\end{document}
+
+
+

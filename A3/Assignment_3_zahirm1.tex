@@ -1,0 +1,281 @@
+\documentclass[11pt,fleqn]{article}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{color}
+
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\labelenumii}{\theenumii.}
+\renewcommand{\labelenumiii}{\theenumiii.}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\bsp}{\begin{sloppypar}}
+\newcommand{\esp}{\end{sloppypar}}
+\newcommand{\mname}[1]{\mbox{\sf #1}}
+\newcommand{\pnote}[1]{{\langle \text{#1} \rangle}}
+\newcommand{\sB}{\mbox{$\cal B$}}
+\newcommand{\sC}{\mbox{$\cal C$}}
+\newcommand{\sF}{\mbox{$\cal F$}}
+\newcommand{\sP}{\mbox{$\cal P$}}
+\newcommand{\subfun}{\sqsubseteq}
+\ifdefined \And 
+\renewcommand{\And}{\wedge}
+\else
+\newcommand{\And}{\wedge}
+\fi
+\newcommand{\Or}{\vee}
+\newcommand{\Implies}{\Rightarrow}
+\newcommand{\Iff}{\LeftRightarrow}
+\newcommand{\Forall}{\forall}
+\newcommand{\ForallApp}{\forall\,}
+\newcommand{\Forsome}{\exists}
+\newcommand{\ForsomeApp}{\exists\,}
+\newcommand{\mdot}{\mathrel.}
+\newcommand{\set}[1]{{\{ #1 \}}}
+
+\begin{document}
+
+\begin{center}
+	
+	{\large \textbf{COMPSCI/SFWRENG 2FA3}}\\[2mm]
+	{\large \textbf{Discrete Mathematics with Applications II}}\\[2mm]
+	{\large \textbf{Winter 2021}}\\[8mm]
+	{\huge \textbf{Assignment 3}}\\[6mm]
+	{\large \textbf{Dr.~William M. Farmer and Dr.~Mehrnoosh Askarpour}}\\[2mm]
+	{\large \textbf{McMaster University}}\\[6mm]
+	{\large Revised: February 3, 2021}
+	
+\end{center}
+
+\medskip
+
+Assignment 1 consists of some background definitions, two sample
+problems, and two required problems.  You must write your solutions to
+the required problems using LaTeX.  Use the solutions of the sample
+problems as a guide.
+
+Please submit Assignment~1 as two files,
+\texttt{Assignment\_1\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_1\_\emph{YourMacID}.pdf}, to the Assignment~1
+folder on Avenue under Assessments/Assignments.
+\texttt{\emph{YourMacID}} must be your personal MacID (written without
+capitalization).  The \texttt{Assignment\_1\_\emph{YourMacID}.tex}
+file is a copy of the LaTeX source file for this assignment
+(\texttt{Assignment\_1.tex} found on Avenue under
+Contents/Assignments) with your solution entered after each required
+problem.  The \texttt{Assignment\_1\_\emph{YourMacID}.pdf} is the PDF
+output produced by executing
+
+\begin{itemize}
+	
+	\item[] \texttt{pdflatex Assignment\_1\_\emph{YourMacID}}
+	
+\end{itemize}
+
+This assignment is due \textbf{Sunday, February 14, 2021 before
+	midnight.}  You are allow to submit the assignment multiple times,
+but only the last submission will be marked.  \textbf{Late submissions
+	and files that are not named exactly as specified above will not be
+	accepted!}  It is suggested that you submit your preliminary
+\texttt{Assignment\_1\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_1\_\emph{YourMacID}.pdf} files well before the
+deadline so that your mark is not zero if, e.g., your computer fails
+at 11:50 PM on February 14.
+
+\textbf{Although you are allowed to receive help from the
+  instructional staff and other students, your submission must be your
+  own work.  Copying will be treated as academic dishonesty! If any of
+  the ideas used in your submission were obtained from other students
+  or sources outside of the lectures and tutorials, you must
+  acknowledge where or from whom these ideas were obtained.}
+
+\subsection*{Background}
+
+A \emph{word} over an alphabet $\Sigma$ of symbols is a string
+\[a_1a_2a_3{\cdots}a_n\] of symbols from $\Sigma$.  For example, if $\Sigma
+= \set{a,b,c}$, then the following are words over $\Sigma$ among many
+others: \bi
+
+  \item $cbaca$.
+
+  \item $ba$.
+
+  \item $acbbca$.
+
+  \item $a$
+
+  \item $\epsilon$ (which denotes the empty word).
+
+\ei 
+
+Let $\Sigma^*$ be the set of all words over $\Sigma$ (which includes
+$\epsilon$, the empty word).  Associated with each word $w \in
+\Sigma^*$ is a set of positions.  For example, $\set{1,2,3}$ is set of
+positions of the word $abc$ with the symbol $a$ occupying position 1,
+$b$ occupying position 2, and $c$ occupying position 3.  If $u,v \in
+\Sigma^*$, $uv$ is the word in $\Sigma^*$ that results from
+concatenating $u$ and $v$.  For example, if $u = aba$ and $v = bba$,
+then $uv = ababba$.
+
+A \emph{language} $L$ over $\Sigma$ is a subset of $\Sigma^*$.  A
+language can be specified by a first-order formula in which the
+quantifiers range over the set of positions in a word.  In order to
+write such formulas we need some predicates on positions.
+$\mname{last}(x)$ asserts that position $x$ is the last position in a
+word.  For $a \in \Sigma$, $a(x)$ asserts that the symbol $a$ occupies
+position $x$.  For example, the formula \[\ForallApp x \mdot
+\mname{last}(x) \rightarrow a(x)\] says the symbol $a$ occupies the
+last position of a word.  This formula is true, e.g., for the words
+$aaa$, $a$, and $bca$.
+
+The language over $\Sigma$ specified by a formula is the set of words
+in $\Sigma^*$ for which the formula is true.  For example, if $a \in
+\Sigma$, then $\ForallApp x \mdot \mname{last}(x) \rightarrow a(x)$ specifies
+the language $\set{ua \mid u \in \Sigma^*}$.
+
+\subsection*{Problems}
+
+\be
+
+  \item \textbf{[12 points]} Let $\Sigma$ be a finite alphabet and
+    $\Sigma^*$ be the set of words over $\Sigma$.  Define $u \le v$ to
+    be mean there are $x,y \in \Sigma^*$ such that $xuy = v$.  That
+    is, $u \le v$ holds iff $u$ is a subword of $v$.
+
+  \be
+
+    \item Prove that $(\Sigma^*,\le)$ is a weak partial order.
+
+    \item Prove that $(\Sigma^*,\le)$ is not a weak total order.
+
+    \item Does $(\Sigma^*,\le)$ have a minimum element?  Justify your
+      answer.
+
+    \item Does $(\Sigma^*,\le)$ have a maximum element?  Justify your
+      answer.
+
+  \ee
+    \\
+    \vspace{15mm} %5mm vertical space
+  \textcolor{blue}{\textbf{Mohammad Omar Zahir, zahirm1, Feb 14, 2021}}
+  \\\\
+  a)
+  \begin{proof}
+    To prove that $(\Sigma^*,\le)$, defined as $x,y \in \Sigma^*$ such that $xuy = v$, is a weak partial order, we need to prove that it satisfies the properties of reflexivity, anti-symmetry, and transitivity.
+    
+    \medskip
+    
+    \emph{Reflexivity}: $\forall u \in \Sigma$. $u \le u$.
+    \begin{align*}
+      &\phantom{{}=} \mname {$\exists x, y \in \Sigma^*$ , $xuy = u$} \\
+      &\equiv \mname{($x u y = u$) [x, y = $\epsilon$, $\epsilon$]}  & \pnote{$\exists$ - Introduction}\\
+      &\equiv \mname{$\epsilon u \epsilon = u$}  & \pnote{Substitution}\\
+      &\equiv \mname{$u = u$}  & \pnote{Concatenation of Empty word}\\
+      &\equiv \mname{True}  & \pnote{Equality}
+    \end{align*}
+    Thus, Reflexivity holds.
+    \\\\\\
+    \emph{Anti-symmetry}: $\forall u,v \in \Sigma$. $u \le v$ $\And$ $v\le u$ $\Implies$ $u = v$.
+    \begin{align*}
+      &\phantom{{}=} \mname {$\exists x, y \in \Sigma^*$ , $xuy = v$ $\And$ $\exists x, y \in \Sigma^*$ , $xvy = u$ \\
+      &\quad $\Implies$ $u = v$} \\
+      &\equiv \mname{($x u y = v$) [x, y = $\epsilon$, $\epsilon$] $\And$ ($x v y = u$) [x, y = $\epsilon$, $\epsilon$] \\
+      &\quad $\Implies$ $u = v$}  & \pnote{$\exists$ - Introduction}\\
+      &\equiv \mname{$\epsilon$ $u$ $\epsilon$ = $v$ $\And $ $\epsilon$ $v$ $\epsilon$ = $u$ $\Implies$ $u = v$}  & \pnote{Substitution}\\
+      &\equiv \mname{$u = v$ $\And$ $v = u$ $\Implies$ $u = v$}  & \pnote{Concatenation of Empty word}\\
+      &\equiv \mname{$u = v$ $\Implies$ $u = v$}  & \pnote{Idempotency of $\And$}\\
+      &\equiv \mname{True}  & \pnote{Reflexivity of Implication}
+    \end{align*}
+    Thus, Anti-symmetry holds.
+    \\\\\\
+    \emph{Transitivity}: $\forall u,v,w \in \Sigma$. $u \le v$ $\And$ $v\le w$ $\Implies$ $u \le w$.
+    \begin{align*}
+      &\phantom{{}=} \mname {$\exists x, y \in \Sigma^*$ , $xuy = v$ $\And$ $\exists x, y \in \Sigma^*$ , $xvy = w$ \\
+      &\quad $\Implies$ $\exists x, y \in \Sigma^*$ , $xuy = w$} \\
+      &\equiv \mname{($x u y = v$) [x, y = $\epsilon$, $\epsilon$] $\And$ ($x v y = w$) [x, y = $\epsilon$, $\epsilon$]\\
+      &\quad $\Implies$ ($x u y = w$) [x, y = $\epsilon$, $\epsilon$]}  & \pnote{$\exists$ - Introduction}\\
+      &\equiv \mname{$\epsilon$ $u$ $\epsilon$ = $v$ $\And $ $\epsilon$ $v$ $\epsilon$ = $w$ $\Implies$ $\epsilon$ $u$ $\epsilon$ = $w$}  & \pnote{Substitution}\\
+      &\equiv \mname{$u$ = $v$ $\And$ $v$ = $w$ $\Implies$ $u = w$}  & \pnote{Concatenation of Empty word}\\
+      &\equiv \mname{True}  & \pnote{Transitivity of Equal}
+    \end{align*}
+    Thus, Transitivity holds.
+    \\
+  \end{proof}
+  b)
+  \begin{proof}
+  To prove that the order is not a weak total order, we must show that the order is not a total, meaning it does not satisfy the property $\forall u,v \in \Sigma$. $u \le v$ $\Or$ $v\le u$.  \\\\
+  \emph{Totality}: $\forall u,v \in \Sigma$. $u \le v$ $\Or$ $v\le u$. For the purposes of showing that this property does not hold, we will represent u, v as letters a, b respectively, and prove a counter example.
+    \begin{align*}
+      &\phantom{{}=} \mname {$\exists x, y \in \Sigma^*$ , $x$a$y$ = b $\Or$ $\exists x, y \in \Sigma^*$ , $x$ b $y$ = a}.\\
+      &\equiv \mname{($x$a$y =$ b) [x, y = $\epsilon$, $\epsilon$] $\Or$ ($x $b$ y = $a) [x, y = $\epsilon$, $\epsilon$]}  & \pnote{$\exists$ - Introduction}\\
+      &\equiv \mname{$\epsilon$ a $\epsilon$ = b $\Or $ $\epsilon$ b $\epsilon$ = a}  & \pnote{Substitution}\\
+      &\equiv \mname{a = b $\Or$ b = a}  & \pnote{Concatenation of Empty word}\\
+      &\equiv \mname{False}  & \pnote{a $\neq$ b, Idempotency of $\Or$}\\
+    \end{align*}
+    Knowing that the letters a and b do not equal each other, meaning that a and b cannot be ordered in this set, we can say that $\forall x,y$ the order does not hold, hence proving it does not satisfy the property of totality, thus disproving the order to be a total order. 
+  \end{proof}
+  c)
+  \\
+  A set $S$ has a minimum element $m$ if by definition there is a $m \in S$ such that $\forall x \in S, m \le x$. In the order defined by $(\Sigma^*,\le)$, we can conclude that there is a minimum element, the empty word $\epsilon$, which satisfies this condition, as we can see that every word can be shown to have been comprised of $\epsilon$, thus proving that it is a subset of all other sets in $\Sigma^*$, making it the minimum element. 
+  \\\\
+  d)
+  \\
+  A set $S$ has a maximum element $M$ if by definition there is a $M \in S$ such that $\forall x \in S, x \le M$. In the order defined by $(\Sigma^*,\le)$, we can conclude that there is no maximum element as there is no bound to the size that word $w$ comprised of the alphabet $\Sigma$ can be. Despite there being a finite set of letters in the alphabet, there are an infinite number of combinations with those letters as there is no defined bound, thus proving that there is no maximum element. This is similar to the set of natural number where we have digits from 0-9, but there is no maximum element in the set, as there is an infinite combination of those 10 digits.
+  \\
+  \vspace{10mm} %5mm vertical space
+  \item \textbf{[8 points]} Let $\Sigma = \set{a,b,c}$ be a finite
+    alphabet.  Construct formulas that specify the following languages
+    over $\Sigma$.
+
+  \be
+
+    \item $\set{awa \mid w \in \Sigma^*}$.
+
+    \item $\set{dwd \mid d \in \Sigma \text{ and } w \in \Sigma^*}$.
+
+    \item $\set{uaav \mid u, v \in \Sigma^*}$.
+    
+    \item $\set{uavbw \mid u,v,w \in \Sigma^*}$.
+
+    \item $\Sigma^*$.
+
+    \item $\Sigma^* \setminus \set{\epsilon}$.
+
+    \item $\set{\epsilon}$.
+
+    \item $\emptyset$.
+
+  \ee
+    \textcolor{blue}{\textbf{Mohammad Omar Zahir, zahirm1, Feb 4, 2021}}\\
+    \be
+  \item $\forall $ $x$ $.$ a(0) $\And$ (last($x$) $\rightarrow$ a($x$))
+  \\
+  \item $\Forall $ $x$ $. \mname{ } (a(0) \wedge (\mname{last}(x) \rightarrow a(x))) \Or (b(0) \wedge (\mname{last}(x) \rightarrow b(x)))$ \Or $\mname{ }(c(0) $\wedge$ (\mname{last}(x) \rightarrow c(x)))$
+  \\
+  \item $\exists $ $y$ $.$ $a(y)$ $\And$ $a(y + 1)$
+  \\
+  \item $\exists$ $y,z$ $.$ $a(y)$ $\And$ $b(z)$ $\And$ $y$ $<$ $z$
+  \\
+  \item $\forall$ $x$ $.$ $a(x) \Or b(x) \Or c(x)$ $\Or$ ($a(x)$ $\And$ $\neg$ $ a(x)$)
+  \\
+  \item $\forall$ $x$ $.$ ($a(x) \Or b(x) \Or c(x)$)
+  \\
+  \item $\forall $ $x$ $.$ $a(x)$ $\And$ $\neg$ $ a(x)$
+  \\
+  \item $ \exists $ $x$ $.$ $a(x)$ $\And$ $\neg$ $ a(x)$
+    \ee
+\ee
+
+\end{document}
+
+

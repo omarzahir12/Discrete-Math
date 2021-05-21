@@ -1,0 +1,321 @@
+\documentclass[11pt,fleqn]{article}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{url}
+\usepackage{color}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning,arrows}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\labelenumii}{\theenumii.}
+\renewcommand{\labelenumiii}{\theenumiii.}
+\newcommand{\be}{\begin{enumerate}}
+	\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bi}{\begin{itemize}}
+	\newcommand{\ei}{\end{itemize}}
+\newcommand{\bc}{\begin{center}}
+	\newcommand{\ec}{\end{center}}
+\newcommand{\bsp}{\begin{sloppypar}}
+	\newcommand{\esp}{\end{sloppypar}}
+\newcommand{\mname}[1]{\mbox{\sf #1}}
+\newcommand{\sB}{\mbox{$\cal B$}}
+\newcommand{\sC}{\mbox{$\cal C$}}
+\newcommand{\sF}{\mbox{$\cal F$}}
+\newcommand{\sM}{\mbox{$\cal M$}}
+\newcommand{\sP}{\mbox{$\cal P$}}
+\newcommand{\sV}{\mbox{$\cal V$}}
+\newcommand{\set}[1]{{\{ #1 \}}}
+\newcommand{\Neg}{\neg}
+\ifdefined \And
+\renewcommand{\And}{\wedge}
+\else
+\newcommand{\And}{\wedge}
+\fi
+\newcommand{\Or}{\vee}
+\newcommand{\Implies}{\Rightarrow}
+\newcommand{\Iff}{\LeftRightarrow}
+\newcommand{\Forall}{\forall}
+\newcommand{\ForallApp}{\forall\,}
+\newcommand{\Forsome}{\exists}
+\newcommand{\ForsomeApp}{\exists\,}
+\newcommand{\mdot}{\mathrel.}
+\newcommand{\eps}{\epsilon}
+\newcommand{\pnote}[1]{\langle \mbox{#1} \rangle}
+
+
+\begin{document}
+
+\begin{center}
+
+{\large \textbf{COMPSCI/SFWRENG 2FA3}}\\[2mm]
+{\large \textbf{Discrete Mathematics with Applications II}}\\[2mm]
+{\large \textbf{Winter 2021}}\\[8mm]
+{\huge \textbf{Assignment 4}}\\[6mm]
+{\large \textbf{Dr.~William M. Farmer and Dr.~Mehrnoosh Askarpour}}\\[2mm]
+{\large \textbf{McMaster University}}\\[6mm]
+{\large Revised: February 23, 2021}
+
+\end{center}
+
+\medskip
+
+Assignment 4 consists of two problems.  You must write your solutions
+to the problems using LaTeX.
+
+Please submit Assignment~4 as two files,
+\texttt{Assignment\_4\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_4\_\emph{YourMacID}.pdf}, to the Assignment~4
+folder on Avenue under Assessments/Assignments.
+\texttt{\emph{YourMacID}} must be your personal MacID (written without
+capitalization).  The \texttt{Assignment\_4\_\emph{YourMacID}.tex}
+file is a copy of the LaTeX source file for this assignment
+(\texttt{Assignment\_4.tex} found on Avenue under
+Contents/Assignments) with your solution entered after each problem.
+The \texttt{Assignment\_4\_\emph{YourMacID}.pdf} is the PDF output
+produced by executing
+
+\begin{itemize}
+
+  \item[] \texttt{pdflatex Assignment\_4\_\emph{YourMacID}}
+
+\end{itemize}
+
+This assignment is due \textbf{Sunday, February 28, 2021 before
+  midnight.}  You are allow to submit the assignment multiple times,
+but only the last submission will be marked.  \textbf{Late submissions
+  and files that are not named exactly as specified above will not be
+  accepted!}  It is suggested that you submit your preliminary
+\texttt{Assignment\_4\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_4\_\emph{YourMacID}.pdf} files well before the
+deadline so that your mark is not zero if, e.g., your computer fails
+at 11:50 PM on February 28.
+
+\textbf{Although you are allowed to receive help from the
+  instructional staff and other students, your submission must be your
+  own work.  Copying will be treated as academic dishonesty! If any of
+  the ideas used in your submission were obtained from other students
+  or sources outside of the lectures and tutorials, you must
+  acknowledge where or from whom these ideas were obtained.}
+
+\newpage
+
+\subsection*{Presenting DFAs and NFAs Transition Diagrams}
+
+In this assignment you are asked to present DFAs as transition
+diagrams.  You are can do this in one of two ways.
+
+The first way is to present the diagram using the LaTeX graphics
+package TikZ.  The TikZ code can either be written by hand or
+automatically generated using the finsm system available at
+\texttt{http:finsm.io}.
+
+Here are some examples of how it can be used to create
+DFA and NFA transition diagrams that appear in the lectures slides:
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=2.5cm,on grid,auto] 
+   \node[state, initial, thick] (q_0)   {$q_0$}; 
+   \node[state, thick] (q_1) [right=of q_0] {$q_1$}; 
+   \node[state, thick] (q_2) [right=of q_1] {$q_2$}; 
+   \node[state, accepting, thick] (q_3) [right=of q_2] {$q_3$};
+    \path[->, thick, >=stealth] 
+    (q_0) edge [bend left, above] node {$a$} (q_1)
+          edge [loop, above] node {$b$} (q_2)
+    (q_1) edge [bend left, above] node {$a$} (q_2)
+          edge [bend left, above] node {$b$} (q_0)
+    (q_2) edge [bend left, above] node {$a$} (q_3) 
+          edge [bend left, below]  node {$b$} (q_0)
+    (q_3) edge [loop, above] node {$a,b$} (q_2); 
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto] 
+   \node[state, initial, accepting, thick] (q_0)   {$q_0$}; 
+   \node[state, thick] (q_1) [right=of q_0] {$q_1$}; 
+   \node[state, thick] (q_2) [below=of q_0] {$q_2$}; 
+   \node[state, thick] (q_3) [right=of q_2] {$q_3$};
+    \path[->, thick, >=stealth] 
+    (q_0) edge [bend left, above] node {1} (q_1)
+          edge [bend left, right] node {0} (q_2)
+    (q_1) edge [bend left, below] node {1} (q_0)
+          edge [bend left, right] node {0} (q_3)
+    (q_2) edge [bend left, above] node {1} (q_3) 
+          edge [bend left, left]  node {0} (q_0)
+    (q_3) edge [bend left, below] node {1} (q_2) 
+          edge [bend left, left]  node {0} (q_1);
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=1.7cm,on grid,auto] 
+   \node[state, initial, thick] (q_0)   {$q_0$}; 
+   \node[state, thick] (q_1) [right=of q_0] {$q_1$}; 
+   \node[state, thick] (q_2) [right=of q_1] {$q_2$}; 
+   \node[state, thick] (q_3) [right=of q_2] {$q_3$};
+   \node[state, thick] (q_4) [right=of q_3] {$q_4$};
+   \node[state, thick, accepting] (q_5) [right=of q_4] {$q_5$};
+    \path[->, thick, >=stealth] 
+    (q_0) edge [loop, above] node {0,1} (q_1)
+          edge [right, above] node {1} (q_1)
+    (q_1) edge [right, above] node {0,1} (q_2)
+    (q_2) edge [right, above] node {0,1} (q_3)
+    (q_3) edge [right, above] node {0,1} (q_4)
+    (q_4) edge [right, above] node {0,1} (q_5);
+\end{tikzpicture}
+\end{center}
+
+The second way is to take a picture of a hand-written transition
+diagram and then embed it into your assignment using the following
+LaTeX code:
+\begin{verbatim}
+\begin{center}
+\includegraphics[scale = 0.5]{diagram.jpg}
+\end{center}
+\end{verbatim}
+Please make sure your diagram is legible.
+
+\subsection*{Problems}
+
+\be
+
+  \item \textbf{[10 points]} Construct a deterministic finite
+    automaton (DFA) $A$ for the alphabet $\Sigma = \set{0,1}$ such
+    that $L(A)$ is the set of all strings $x$ in $\Sigma^*$ for which
+    $\#0(x)$ is even and $\#1(x)$ is divisible by 3.  Present $A$ as a
+    transition diagram.
+
+  \textcolor{blue}{\textbf{Mohammad Omar Zahir, zahirm1, Feb 28, 2021}}\\
+    \begin{center}
+    \begin{tikzpicture}[]
+        \node[initial,thick,accepting,state] at (-1.925,2.075) (19539728) {$q_0$};
+        \node[thick,state] at (1.45,2.125) (9413e3b5) {$q_1$};
+        \node[thick,state] at (-1.9,-1.475) (299c8301) {$q_3$};
+        \node[thick,state] at (1.45,-1.525) (a97a0ad7) {$q_4$};
+        \node[thick,state] at (4.6,2.0625) (e0402122) {$q_{2}$};
+        \node[thick,state] at (4.625,-1.4625) (e077fb62) {$q_{5}$};
+        \path[->, thick, >=stealth]
+        (19539728) edge [above,in = 173, out = 9] node {$1$} (9413e3b5)
+        (19539728) edge [right,in = 82, out = -82] node {$0$} (299c8301)
+        (9413e3b5) edge [right,in = 82, out = -82] node {$0$} (a97a0ad7)
+        (9413e3b5) edge [above,in = 169, out = 8] node {$1$} (e0402122)
+        (299c8301) edge [above,in = 171, out = 8] node {$1$} (a97a0ad7)
+        (299c8301) edge [left,in = -98, out = 98] node {$0$} (19539728)
+        (a97a0ad7) edge [left,in = -98, out = 98] node {$0$} (9413e3b5)
+        (a97a0ad7) edge [above,in = 171, out = 11] node {$1$} (e077fb62)
+        (e0402122) edge [left,in = 104, out = -103] node {$0$} (e077fb62)
+        (e0402122) edge [above,in = 34, out = 144] node {$1$} (19539728)
+        (e077fb62) edge [right,in = -78, out = 79] node {$0$} (e0402122)
+        (e077fb62) edge [below,in = -28, out = -149] node {$1$} (299c8301)
+        ;
+    \end{tikzpicture}
+    \end{center}
+
+  \bigskip
+
+  \item \textbf{[10 points]} Let $B$ be the DFA given by the following
+    transition diagram:
+
+	\begin{center}
+	\begin{tikzpicture}[]
+		\node[thick,initial,state] (q0) {$q_{0}$};
+		\node[thick,accepting, state] (q1)  [right= of q0]{$q_{1}$};
+		\node[thick,state] (q2)  [right= of q1]{$q_{2}$};
+		\path[->, thick, >=stealth]
+		(q0) edge [bend left,above] node {$1$} (q1)
+		edge [loop above]   node         {0} ()
+		(q1) edge [bend left,above] node {$0$} (q0)
+		edge [bend left,above] node {$1$} (q2)
+		(q2) edge [bend left,above] node {$1$} (q1)
+		edge [bend left = 40, below] node {$0$} (q0)
+		;
+	\end{tikzpicture}
+        \end{center}
+
+   Prove that $L(B)$ is the language of all binary strings that end
+   with an odd number of $1$s.  Hint: Use weak induction on the length
+   of the input string, and let $P(n)$ be the statement that, for all
+   input strings $w$ with $|w| = n$, the following conditions hold:
+
+   \be
+
+     \item If $\delta^*(q_0,w) = q_0$, then $w$ is $\epsilon$ or ends
+       with $0$.
+
+     \item If $\delta^*(q_0,w) = q_1$, then $w$ ends with an odd
+       number of $1$s.
+
+     \item If $\delta^*(q_0,w) = q_2$, then $w$ ends
+       with an even number of $1$s.
+
+   \ee
+	
+   \textcolor{blue}{\textbf{Mohammad Omar Zahir, zahirm1, Feb 28, 2021}}\\
+   \begin{proof}
+   We will prove that $L(B)$ is the language of all binary strings that end
+   with an odd number of $1$s. We will prove $P(n)$ for the the three cases $P_1$, $P_2$, $P_3$, corresponding to a, b, c in the question respectively, where $n = |w|$ the length of the word, by weak induction. \\
+   
+   \emph{Base Case: n = 1}\\
+   We will first prove $P_1$, $P_2$, $P_3$ for the base case, where $n = |w| = 0$, or the empty word $\eps$, and prove $P(0)$.\\\\ 
+   \emph{P1:}
+   We know this to be trivially true as this is what is stated in the condition for $w = \eps$, which is the empty word. Thus it holds for $P1$.
+   \\\\$\delta^*(q_0,\eps) = q_0$\\\\
+   \emph{P2:}
+   We know this to be true because the condition states that when the state is at $q_1$, the word must end with an odd number of $1$s. Because we have the empty word $|w| = 0$, that means that our word does not end with anything, meaning our state never leaves $q_0$. This can be modelled as an implication like $\delta^*(q_0,w) = q_1 \implies w$. We know that the left side of our implication must be False since we stay at $q_0$ for the empty word, meaning that we get $False \implies w$ which is equivalent to $True$ by `Ex-Falso Quodlibet'. Thus $P_2$ holds.\\\\
+   \emph{P3:}
+   This is proved identically to $P_2$. We know this to be true because the condition states that when the state is at $q_2$, the word must end with an even number of $1$s. Because we have the empty word $|w| = 0$, that means that our word does not end with anything, meaning our state never leaves $q_0$. This can be modelled as an implication like $\delta^*(q_0,w) = q_2 \implies w$. We know that the left side of our implication must be False since we stay at $q_0$ for the empty word, meaning that we get $False \implies w$ which is equivalent to $True$ by `Ex-Falso Quodlibet'. Thus $P_3$ holds.\\
+   Having proved the three base case properties, we can say P(0) holds.\\\\
+   \emph{Induction Step: n $>$ 0}\\
+   With the single base cases proven for each $P_1$, $P_2$, $P_3$, we will thus prove $P(n+1)$ holds for all $n = |w| > 0$. Specifically, $w = xi$ which represents the concatenation of $x$ and $i$ where $x \in \Sigma^*$ and $i$ is the end of the word specified by the transition to the state. Additionally, $|w| = n + 1$ and $|x| = n$, and as we are using weak induction, we assume $P(n)$ holds and prove for $P(n+1)$. \\\\
+   \emph{P1:}
+   To prove this, we must show that $w$ must end with 0, as $w$ can no longer be $\eps$. Since we know that the we must end in the $q_0$ state for this property, we can analyse the transitions that are followed to get to $q_0$. 
+   \begin{align*}
+      &\phantom{{}=} \mname {$\delta^*(q_0, w)$}\\
+      &= \mname{$\delta^*(q_0, xi)$} & \pnote{Substitution}\\
+      &= \mname{$\delta(\delta^*(q_0, x), i)$} & \pnote{Definition of $\delta^*$}\\
+      &= \mname{$q_0$} & \pnote{R.H.S. of $P_1$}
+   \end{align*}
+   We can see that all the transitions, represented by the arrows, that are pointing into or ending at $q_0$ are ending with a 0, meaning that if the state is at $q_0$ the last number of the word must be 0. This can formally be written as $\delta^*(q, 0)$ for all $q \in Q$, where $Q$ is all possible states. Thus $P1$ holds, as we have satisfied the condition for all cases for each state.
+   \\\\
+   \emph{P2:}
+   To prove this, we can model the situation as follows.
+   \begin{align*}
+      &\phantom{{}=} \mname {$\delta^*(q_0, w)$}\\
+      &= \mname{$\delta^*(q_0, xi)$}  & \pnote{Substitution}\\
+      &= \mname{$\delta(\delta^*(q_0, x), i)$}  & \pnote{Definition of $\delta^*$}\\
+      &= \mname{$q_1$} & \pnote{R.H.S. of $P_2$ (For Induction Step)}
+   \end{align*}
+   Here we know that $i$ must represent $1$ for both cases as both the transitions to $q_1$ end with a 1. Therefore to prove this we have to analyse the possibilities of the two cases for $q_1$.\\\\
+   \emph{Case 1: $\delta(q_0, 1)$}\\
+   Here we can see that $q_0$ represents $\delta^*(q_0, x) = q_0$. Since we are using weak induction and assuming $P(n)$, we can apply our induction hypothesis for $P_1$ on $x$ which has length of $n$, giving us an empty word or a word that ends with 0. We will then concatenate 1, as we know that $i = 1$, and in either case, we will end the word with a single $1$, which is an odd number of $1$s. Thus, we have proved that $Case$ 1 holds.\\\\
+   \emph{Case 2: $\delta(q_2, 1)$}\\
+   Here we can see that $q_2$ represents $\delta^*(q_0, x) = q_2$. Since we are using weak induction and assuming $P(n)$, we can apply our induction hypothesis for $P_3$ on $x$ which has length of $n$, giving us a word that ends with an even number of $1$s. We will then concatenate 1, as we know that $i = 1$, and the word will end with adding a single $1$, which is an odd number of $1$s, after an even number of $1$s, which is an odd number of $1$s since we trivially know that even + odd = odd. Thus, we have proved that $Case$ 2 holds.\\\\
+   Having proven that the two distinct Cases for $P_2$ hold, we can say that $P_2$ holds.
+   \\\\
+   \emph{P3:}
+   To prove this, we can model the situation as follows.
+   \begin{align*}
+      &\phantom{{}=} \mname {$\delta^*(q_0, w)$} \\
+      &= \mname{$\delta^*(q_0, xi)$} & \pnote{Substitution}\\ 
+      &= \mname{$\delta(\delta^*(q_0, x), i)$} & \pnote{Definition of $\delta^*$}\\
+      &= \mname{$q_2$} & \pnote{R.H.S. of $P_3$ (For Induction Step)}
+   \end{align*}
+   Here we know that $i$ must represent $1$ for the single transition case for the $q_2$ state which can be proved as a case below.\\\\
+   \emph{Case 1: $\delta(q_1, 1)$}\\
+   Here we can see that $q_1$ represents $\delta^*(q_0, x) = q_1$. Since we are using weak induction and assuming $P(n)$, we can apply our induction hypothesis for $P_2$ on $x$ which has length of $n$. This gives us a word that ends with an odd number of $1$s based on the induction hypothesis. We will then concatenate 1, as we know that $i = 1$ from the transition, which is also an odd number of $1$s. Their concatenation will give us an even number of $1$s as we trivially know that odd + odd = even. Thus, we have proved that $Case$ 1 holds.\\\\
+   Having proven the single distinct case for $P_3$, we can say that $P_3$ holds.\\
+   
+    We have proven $P(n+1)$ holds for the three cases $P_1$, $P_2$, $P_3$, where $n = |w|$ the length of the word. Thus we have proved that $P(n)$ holds by weak induction.
+   
+   \end{proof}
+\ee
+
+\end{document}

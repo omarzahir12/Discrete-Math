@@ -1,0 +1,432 @@
+\documentclass[11pt,fleqn]{article}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{color}
+
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\labelenumii}{\theenumii.}
+\renewcommand{\labelenumiii}{\theenumiii.}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\bsp}{\begin{sloppypar}}
+\newcommand{\esp}{\end{sloppypar}}
+\newcommand{\mname}[1]{\mbox{\sf #1}}
+\newcommand{\pnote}[1]{{\langle \text{#1} \rangle}}
+
+\begin{document}
+
+\begin{center}
+
+  {\large \textbf{COMPSCI/SFWRENG 2FA3}}\\[2mm]
+  {\large \textbf{Discrete Mathematics with Applications II}}\\[2mm]
+  {\large \textbf{Winter 2021}}\\[8mm]
+  {\huge \textbf{Assignment 2}}\\[6mm]
+  {\large \textbf{Dr.~William M. Farmer}}\\[2mm]
+  {\large \textbf{McMaster University}}\\[6mm]
+  {\large Revised: January 29, 2021}
+
+\end{center}
+
+\medskip
+
+Assignment 2 consists of two problems.  You must write your solutions
+to the problems using LaTeX.
+
+Please submit Assignment~2 as two files,
+\texttt{Assignment\_2\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_2\_\emph{YourMacID}.pdf}, to the Assignment~2
+folder on Avenue under Assessments/Assignments.
+\texttt{\emph{YourMacID}} must be your personal MacID (written without
+capitalization).  The \texttt{Assignment\_2\_\emph{YourMacID}.tex}
+file is a copy of the LaTeX source file for this assignment
+(\texttt{Assignment\_2.tex} found on Avenue under
+Contents/Assignments) with your solution entered after each problem.
+The \texttt{Assignment\_2\_\emph{YourMacID}.pdf} is the PDF output
+produced by executing
+
+\begin{itemize}
+
+  \item[] \texttt{pdflatex Assignment\_2\_\emph{YourMacID}}
+
+\end{itemize}
+
+This assignment is due \textbf{Sunday, February 7, 2020 before
+  midnight.}  You are allow to submit the assignment multiple times,
+but only the last submission will be marked.  \textbf{Late submissions
+  and files that are not named exactly as specified above will not be
+  accepted!}  It is suggested that you submit your preliminary
+\texttt{Assignment\_2\_\emph{YourMacID}.tex} and
+\texttt{Assignment\_2\_\emph{YourMacID}.pdf} files well before the
+deadline so that your mark is not zero if, e.g., your computer fails
+at 11:50 PM on February 7.
+
+\textbf{Although you are allowed to receive help from the
+  instructional staff and other students, your submission must be your
+  own work.  Copying will be treated as academic dishonesty! If any of
+  the ideas used in your submission were obtained from other students
+  or sources outside of the lectures and tutorials, you must
+  acknowledge where or from whom these ideas were obtained.}
+
+\newpage
+
+\subsection*{Problems}
+
+\be
+
+  \item \textbf{[10 points]}
+
+Let \mname{SimpleTree} be the inductive
+    set defined by the following constructors:
+
+  \be
+
+    \item $\mname{Leaf} : \mathbb{N} \rightarrow \mname{SimpleTree}$.
+
+    \item $\mname{Branch1} : \mname{SimpleTree} \rightarrow
+      \mname{SimpleTree}$.
+
+    \item $\mname{Branch2} : \mname{SimpleTree} \times
+      \mname{SimpleTree} \rightarrow \mname{SimpleTree}$.
+
+  \ee
+
+  The function $\mname{leaves} : \mname{SimpleTree} \rightarrow
+  \mathbb{N}$ is defined by recursion and pattern matching as:
+
+  \be
+
+    \item $\mname{leaves}(\mname{Leaf}(n)) = 1$.
+
+    \item $\mname{leaves}(\mname{Branch1}(t)) = \mname{leaves}(t)$.
+
+    \item $\mname{leaves}(\mname{Branch2}(t_1,t_2)) =
+      \mname{leaves}(t_1) + \mname{leaves}(t_2)$.
+
+  \ee
+
+  The function $\mname{branches} : \mname{SimpleTree} \rightarrow
+  \mathbb{N}$ is defined by recursion and pattern matching as:
+
+  \be
+
+    \item $\mname{branches}(\mname{Leaf}(n)) = 0$.
+
+    \item $\mname{branches}(\mname{Branch1}(t)) = 1 + \mname{branches}(t)$.
+
+    \item $\mname{branches}(\mname{Branch2}(t_1,t_2)) = 1 +
+      \mname{branches}(t_1) + \mname{branches}(t_2)$.
+
+  \ee
+
+  Prove that, for all $t \in \mname{SimpleTree}$, \[\mname{leaves}(t) \le
+  \mname{branches}(t) + 1.\]
+
+  \textcolor{blue}{\textbf{Mohammad Omar Zahir, zahirm1, Feb 4, 2021}}
+  
+  \begin{proof}
+    Let $P(t)$ hold iff \[\mname{leaves}(t) \le
+  \mname{branches}(t) + 1.\]
+    We will prove $P(t)$ for all $t \in \mname{SimpleTree}$ by structural induction.
+    
+    \medskip
+    
+    \emph{Base case}: $t = \mname{Leaf}(n)$.
+    \begin{align*}
+      &\phantom{{}=} \mname {leaves(Leaf($n$))} \\
+      &= \mname{1}  & \pnote{definition of leaves}\\
+      &= \mname{0+1}  & \pnote{arithmetic}\\
+      &\le \mname{branches(Leaf($n$))+1}  & \pnote{definition of branches, R.H.S.}
+    \end{align*}
+    So $P(t)$ holds for $t = \mname{Leaf($n$)}$.
+    \\\\\\
+    \emph{Induction Step.} Having proven the base case, we must show that $P(n)$ recursively holds for both other SimpleTree constructors Branch1($n$) and Branch2($t1, t2$).\\\\
+    \emph{Case 1}: $t = \mname{Branch1}(n)$. Assume $P(n)$ holds.
+    \begin{align*}
+      &\phantom{{}=} \mname {leaves(Branch1($n$))} \\
+      &= \mname{leaves($n$)}  & \pnote{definition of leaves}\\
+      &\le \mname{branches($n$)+1}  & \pnote{induction hypothesis}\\
+      &= \mname{branches(Branch1($n$))}  & \pnote{definition of branches}\\
+      &\le \mname{branches(Branch1($n$))+1}  & \pnote{definition of inequality: 0 $\le$ 1}\\
+    \end{align*}
+    So $P(t)$ holds for $t = \mname{Branch1($n$)}$.
+    \\\\
+    \emph{Case 2}: $t = \mname{Branch2}(t1,t2)$. Assume $P(t1)$ and $P(t2)$ hold.
+    \begin{align*}
+      &\phantom{{}=} \mname {leaves(Branch2($t1$,$t2$))} \\
+      &= \mname{leaves($t1$) + leaves($t2$)}  & \pnote{definition of leaves}\\
+      &\le \mname{branches($t1$) + leaves($t2$) + 1}  & \pnote{induction hypothesis}\\
+      &\le \mname{branches($t1$) + branches($t2$) + 1 + 1}  & \pnote{induction hypothesis}\\
+      &= \mname{branches(Branch2($t1$,$t2$))+1}  & \pnote{definition of branches}\\
+    \end{align*}
+    So $P(t)$ holds for $t = \mname{Branch2($t1$,$t2$)}$.
+    \\\\
+    
+    Therefore, $P(t)$ holds for all $t \in \mname{SimpleTree}$ by
+    structural induction.
+    
+  \end{proof}
+
+  \bigskip
+
+  \item \textbf{[10 points]} 
+
+  Let \mname{BinNum} be the inductive set defined by the following
+  constructors:
+
+  \bi
+
+    \item[] $\mname{Zero} : \mname{BinNum}$.
+
+    \item[] $\mname{One} : \mname{BinNum}$.
+
+    \item[] $\mname{JoinZero} : \mname{BinNum} \rightarrow \mname{BinNum}$.
+
+    \item[] $\mname{JoinOne} : \mname{BinNum} \rightarrow \mname{BinNum}$.
+
+  \ei
+
+  The members of \mname{BinNum} represent binary numerals like $1011$
+  and $010$. \mname{Zero} represents 0; \mname{One} represents 1; and
+  if $u$ represents U, then $\mname{JoinZero}(u)$ represents U$0$
+  and $\mname{JoinOne}(u)$ represents U$1$.  For
+  example, \[\mname{JoinOne}(\mname{JoinZero}(\mname{JoinOne}(\mname{One})))\]
+  represents the binary number 1101.
+
+  The function \[\mname{len} : \mname{BinNum} \rightarrow \mathbb{N}\]
+  maps a member of \mname{BinNum} to its length.  \mname{len} is
+  defined by the following equations using recursion and pattern
+  matching:
+
+  \bi
+
+    \item[] $\mname{len}(\mname{Zero}) = 1$.
+
+    \item[] $\mname{len}(\mname{One}) = 1$.
+
+    \item[] $\mname{len}(\mname{JoinZero}(u)) = \mname{len}(u) + 1$.
+
+    \item[] $\mname{len}(\mname{JoinOne}(u)) = \mname{len}(u) + 1$.
+
+  \ei
+
+  The function \[\mname{val} : \mname{BinNum} \rightarrow \mathbb{N}\]
+  maps a member of \mname{BinNum} to the value of the binary numeral
+  it represents.  For
+  example, \[\mname{val}(\mname{JoinOne}(\mname{JoinZero}(\mname{JoinOne}(\mname{One}))))
+  = (1101)_2 = 13.\] \mname{val} is defined by the following equations
+  using recursion and pattern matching:
+
+  \bi
+
+    \item[] $\mname{val}(\mname{Zero}) = 0$.
+
+    \item[] $\mname{val}(\mname{One}) = 1$.
+
+    \item[] $\mname{val}(\mname{JoinZero}(u) = 2 * \mname{val}(u)$.
+
+    \item[] $\mname{val}(\mname{JoinOne}(u) = (2 * \mname{val}(u)) +  1$.
+
+  \ei
+
+  The function \[\mname{add} : \mname{BinNum} \times \mname{BinNum}
+  \rightarrow \mname{BinNum}\] is intended to implement addition on
+  members of \mname{BinNum}.  It is defined by the following equations
+  using recursion and pattern matching:
+
+  \bi
+
+    \item[] $\mname{add}(u,\mname{Zero}) = u$.
+
+    \item[] $\mname{add}(\mname{Zero},u) = u$.
+
+    \item[] $\mname{add}(\mname{One},\mname{One}) =
+      \mname{JoinZero}(\mname{One})$.
+
+    \item[] $\mname{add}(\mname{JoinZero}(u),\mname{One}) =
+      \mname{JoinOne}(u)$.
+
+    \item[] $\mname{add}(\mname{One},\mname{JoinZero}(u)) =
+      \mname{JoinOne}(u)$.
+
+    \item[] $\mname{add}(\mname{JoinOne}(u),\mname{One}) =
+      \mname{JoinZero}(\mname{add} (u,\mname{One})$.
+
+    \item[] $\mname{add}(\mname{One},\mname{JoinOne}(u)) =
+      \mname{JoinZero}(\mname{add} (u,\mname{One})$.
+
+    \item[] $\mname{add}(\mname{JoinZero}(u),\mname{JoinZero}(v)) =
+      \mname{JoinZero}(\mname{add} (u,v)$.
+
+    \item[] $\mname{add}(\mname{JoinOne}(u),\mname{JoinZero}(v)) =
+      \mname{JoinOne}(\mname{add} (u,v)$.
+
+    \item[] $\mname{add}(\mname{JoinZero}(u),\mname{JoinOne}(v)) =
+      \mname{JoinOne}(\mname{add} (u,v)$.
+
+    \item[] $\mname{add}(\mname{JoinOne}(u),\mname{JoinOne}(v)) =
+      \mname{JoinZero}(\mname{add} (\mname{add} (u,v),\mname{One}))$.
+
+  \ei
+
+  Notice that the algorithm behind the definition is essentially the
+  same algorithm that children learn to add numbers represented as
+  decimal numerals.  The last equation is a bit complicated because it
+  involves a carry of 1.
+
+  \textbf{Lemma 1}. For all $u,v \in \mname{BinNum}$,
+  \[\mname{len}(\mname{add}(u,v)) \le \mname{len}(u) +
+  \mname{len}(v).\]
+
+  \textbf{Theorem 1}. For all $u,v \in
+  \mname{BinNum}$, \[\mname{val}(\mname{add}(u,v)) = \mname{val}(u) +
+  \mname{val}(v).\]
+
+  Theorem 1 states that \mname{add} correctly implements addition on
+  the members of $\mname{BinNum}$.
+
+  Prove Theorem 1 assuming Lemma 1.  (You are not required to prove
+  Lemma 1.)  Hint: Use strong induction with $P(n) \equiv
+  \mname{val}(\mname{add}(u,v)) = \mname{val}(u) + \mname{val}(v)$ for
+  all $u,v \in \mname{BinNum}$ such that $n = \mname{len}(u) +
+  \mname{len}(v)$.
+
+  \bigskip
+
+  \textcolor{blue}{\textbf{Mohammad Omar Zahir, zahirm1, Feb 7, 2021}}
+
+  \begin{proof}
+    Assuming Lemma 1, let $P(n)$ hold iff $ 
+  \mname{val}(\mname{add}(u,v)) = \mname{val}(u) + \mname{val}(v)$.
+    We will prove $P(n)$ for all $u,v \in \mname{BinNum}$ such that $n = \mname{len}(u) +
+  \mname{len}(v)$ using strong induction.\\
+    
+    To prove the base case for $P(n)$, there are three distinct cases which serve as the basis for our induction steps. These base cases were determined by finding the lowest possible value for $n = \mname{len}(u) + \mname{len}(v)$, which is 2 from the cases below.\\\\
+    \emph{Base case 1 $P(2)$}: $u, v = \mname{Zero, Zero}$.
+    \begin{align*}
+      &\phantom{{}=} \mname {val(add(Zero, Zero))} \\
+      &= \mname{val(Zero)}  & \pnote{definition of add: $u$, Zero}\\
+      &= \mname{0}  & \pnote{definition of val: Zero}\\
+      &= \mname{0 + 0}  & \pnote{arithmetic}\\
+      &= \mname{val(Zero) + val(Zero)}  & \pnote{definition of val: Zero}
+    \end{align*}
+    So $P(n)$ holds for $n = len(u)+len(v)$ where $u, v  = \mname{Zero, Zero}$.
+    \\\\
+    \emph{Base case 2 $P(2)$}: $u, v = \mname{One, One}$.
+    \begin{align*}
+      &\phantom{{}=} \mname {val(add(One, One))} \\
+      &= \mname{val(JoinZero(One))}  & \pnote{definition of add: One, One}\\
+      &= \mname{$2*\mname{val(One)}$}  & \pnote{definition of val: JoinZero}\\
+      &= \mname{$2 * 1$}  & \pnote{definition of val: One}\\
+      &= \mname{$1 + 1$}  & \pnote{arithmetic}\\
+      &= \mname{val(One) + val(One)}  & \pnote{definition of val: One}
+    \end{align*}
+    So $P(n)$ holds for $n = len(u)+len(v)$ where $u, v  = \mname{One, One}$.
+    \\\\
+    \emph{Base case 3 $P(3)$}: $u, v = \mname{Zero, One}$.
+    \begin{align*}
+      &\phantom{{}=} \mname {val(add(Zero, One))} \\
+      &= \mname{val(One)}  & \pnote{definition of add: Zero, One}\\
+      &= \mname{$1$}  & \pnote{definition of val: One}\\
+      &= \mname{$0 + 1$}  & \pnote{arithmetic}\\
+      &= \mname{val(Zero) + val(One)}  & \pnote{definition of val: Zero and One}
+    \end{align*}
+    So $P(n)$ holds for $n = len(u)+len(v)$ where $u, v  = \mname{Zero, One}$.
+    \\\\
+    \emph{Induction Step}\\\\
+    With the base cases proven, we must show that $P(n)$ holds for all $n > 2$. We will thus prove 7 distinct cases below that hold for $n = len(u) + len(v)$ that have $n > 2$ with the underlying assumption of Lemma 1.\\\\
+    \emph{Case 1: u, v = \mname{JoinZero$(u)$, Zero}}:
+    \begin{align*}
+      &\phantom{{}=} \mname {val(add(JoinZero$(u)$, Zero))} \\
+      &= \mname{val(JoinZero$(u)$)}  & \pnote{definition of add: JoinZero, Zero}\\
+      &= \mname{val(JoinZero$(u)$) + 0}  & \pnote{arithmetic}\\
+      &= \mname{val(JoinZero$(u)$) + val(Zero)}  & \pnote{definition of val: Zero}\\
+    \end{align*}
+    Thus $P(n)$ holds for $n = \mname{len}(u) + \mname{len}(v)$, where $u, v = \mname{JoinZero}(u), \mname{ Zero}$, respectively.
+    \\\\
+    \emph{Case 2: u, v = \mname{JoinZero$(u)$, One}}:
+    \begin{align*}
+      &\phantom{{}=} \mname {val(add(JoinZero$(u)$, One))} \\
+      &= \mname{val(JoinOne$(u)$)}  & \pnote{definition of add: JoinZero, One}\\
+      &= \mname{2 $*$ val($(u)$) + 1}  & \pnote{definition of val: JoinOne}\\
+      &= \mname{val(JoinZero$(u)$) + 1}  & \pnote{definition of val: JoinZero}\\
+      &= \mname{val(JoinZero$(u)$) + val(One)}  & \pnote{definition of val: One}\\
+    \end{align*}
+    Thus $P(n)$ holds for $n = \mname{len}(u) + \mname{len}(v)$, where $u, v = \mname{JoinZero}(u), \mname{ One}$, respectively.
+    \\\\
+    \emph{Case 3: u, v = \mname{JoinZero$(u)$, JoinZero$(v)$}}: Because strong induction is being used in this proof, we can assume that $P(n)$ holds for all $n$ up to $n + 1$. This is because the current values of u, v are JoinZero and JoinZero which show that $P(n+2) = P(len(u) + 1 + len(v) + 1)$, which represent $P(n+2)$, allowing us to use our induction hypothesis.\\
+    \begin{align*}
+      &\phantom{{}=} \mname {val(add(JoinZero$(u)$, JoinZero$(v)$))}\\
+      &= \mname{val(JoinZero(add($u,v$)))}  & \pnote{definition of add: JoinZero, JoinZero}\\
+      &= \mname{2 $*$ val(add($u, v$))}  & \pnote{definition of val: JoinZero}\\
+      &= \mname{2 $*$ (val($u$) + val($v$))}  & \pnote{induction hypothesis: $P(n)$}\\
+      &= \mname{2 $*$ val($u$) + 2 $*$ val($v$)}  & \pnote{arithmetic}\\
+      &= \mname {val(JoinZero($u$)) + val(JoinZero($v$))} & \pnote{definition of val: JoinZero}\\
+    \end{align*}
+    Thus $P(n)$ holds for $n = \mname{len}(u) + \mname{len}(v)$, where $u, v = \mname{JoinZero}(u), \mname{ JoinZero}(v)$, respectively.
+    \\\\
+    \emph{Case 4: u, v = \mname{JoinOne$(u)$, Zero}}:
+    \begin{align*}
+      &\phantom{{}=} \mname {val(add(JoinOne$(u)$, Zero))} \\
+      &= \mname{val(JoinOne$(u)$)}  & \pnote{definition of add: JoinOne, Zero}\\
+      &= \mname{val(JoinOne$(u)$) + 0}  & \pnote{arithmetic}\\
+      &= \mname{val(JoinOne$(u)$) + val(Zero)}  & \pnote{definition of val: Zero}\\
+    \end{align*}
+    Thus $P(n)$ holds for $n = \mname{len}(u) + \mname{len}(v)$, where $u, v = \mname{JoinOne}(u), \mname{ Zero}$, respectively.
+    \\\\
+    \emph{Case 5: u, v = \mname{JoinOne$(u)$, One}}: Because strong induction is being used in this proof, we can assume that $P(n)$ holds for all values up to $n$. This is because the current values of u, v are JoinOne and One which show that $P(n+1) = P(len(u) + 1 + 1)$, which represent $P(n+1)$, allowing us to use our induction hypothesis.\\
+    \begin{align*}
+      &\phantom{{}=} \mname {val(add(JoinOne$(u)$, One))} \\
+      &= \mname{val(JoinZero(add(($u$, One)))}  & \pnote{definition of add: JoinOne, One}\\
+      &= \mname{2 $*$ val(add($u$, One))}  & \pnote{definition of val: JoinZero}\\
+      &= \mname{2 $*$ (val($u$) + val (One))}  & \pnote{induction hypothesis: $P(n)$}\\
+      &= \mname{2 $*$ (val($u$) + 1)}  & \pnote{definition of val: One}\\
+      &= \mname{2 $*$ val($u$) + 1 + 1}  & \pnote{arithmetic}\\
+      &= \mname{2 $*$ val($u$) + 1 + val(One)}  & \pnote{definition of val: One}\\
+      &= \mname{val(JoinOne($u$)) + val(One)}  & \pnote{definition of val: JoinOne}\\
+    \end{align*}
+    Thus $P(n)$ holds for $n = \mname{len}(u) + \mname{len}(v)$, where $u, v = \mname{JoinOne}(u), \mname{ One}$, respectively.
+    \\\\
+    \emph{Case 6: u, v = \mname{JoinOne$(u)$, JoinOne$(v)$}}:
+    Because strong induction is being used in this proof, we can assume that $P(n)$ holds for all $n$ up to $n + 1$. This is because the current values of u, v are JoinOne and JoinOne which show that $P(n+2) = P(len(u) + 1 + len(v) + 1)$, which represent $P(n+2)$, allowing us to use our induction hypothesis. The first induction hypothesis that was used in this proof, $P(n+1)$ is done so as len(add(u,v)) can be written as len(u) + len(v) based on the definition of lemma 1.\\
+    \begin{align*}
+      &\phantom{{}=} \mname {val(add(JoinOne$(u)$, JoinOne$(v)$))} \\
+      &= \mname{val($\mname{JoinZero}(\mname{add} (\mname{add} (u,v),\mname{One}))$))}  & \pnote{definition of add: JoinOne, JoinOne}\\
+      &= \mname{2 $*$ val(\mname{add} (\mname{add} (u,v),\mname{One}))}  & \pnote{definition of val: JoinZero}\\
+      &= \mname{2 $*$ (val(add($u,v$)) + val(One))}  & \pnote{induction hypothesis: $\ge$ $P(n+1)$}\\
+      &= \mname{2 $*$ (val($u$)+val($v$)) + val(One))}  & \pnote{induction hypothesis: $P(n)$}\\
+      &= \mname{2 $*$ (val($u$)+val($v$)) + 2 $*$ val(One)}  & \pnote{arithmetic}\\
+      &= \mname {2 $*$ (val($u$)+val($v$)) + 2 $*$ 1} & \pnote{definition of val: One}\\
+      &= \mname {2 $*$ val($u$) + 2 $*$ val($v$) + 1 + 1} & \pnote{arithmetic}\\
+      &= \mname {val(JoinOne($u$)) + val(JoinOne($v$)) } & \pnote{definition of val: JoinOne}\\
+    \end{align*}
+    Thus $P(n)$ holds for $n = \mname{len}(u) + \mname{len}(v)$, where $u, v = \mname{JoinOne}(u), \mname{ JoinOne}(v)$, respectively.
+    \\\\
+    \emph{Case 7: u, v = \mname{JoinOne$(u)$, JoinZero$(v)$}}:
+    Because strong induction is being used in this proof, we can assume that $P(n)$ holds for all $n$ up to $n + 1$. This is because the current values of u, v are JoinOne and JoinZero which show that $P(n+2) = P(len(u) + 1 + len(v) + 1)$, which represent $P(n+2)$, allowing us to use our induction hypothesis.\\
+    \begin{align*}
+      &\phantom{{}=} \mname {val(add(JoinOne$(u)$, JoinZero$(v)$))} \\
+      &= \mname{val(JoinOne(add($u,v$)))}  & \pnote{definition of add: JoinOne, JoinZero}\\
+      &= \mname{2 $*$ val(add($u, v$)) + 1}  & \pnote{definition of val: JoinOne}\\
+      &= \mname{2 $*$ (val($u$) + val($v$)) + 1}  & \pnote{induction hypothesis: $P(n)$}\\
+      &= \mname{2 $*$ val($u$) + 2 $*$ val($v$) + 1}  & \pnote{arithmetic}\\
+      &= \mname {val(JoinOne($u$)) + 2 $*$ val($v$)} & \pnote{definition of val: JoinOne}\\
+      &= \mname {val(JoinOne($u$)) + val(JoinZero($v$))} & \pnote{definition of val: JoinZero}\\
+    \end{align*}
+    Thus $P(n)$ holds for $n = \mname{len}(u) + \mname{len}(v)$, where $u, v = \mname{JoinOne}(u), \mname{ JoinZero}(v)$, respectively.
+    \\\\
+    Therefore, $P(n)$ holds for all $n = \mname{len}(u) + \mname{len}(v)$ by strong induction.
+    
+  \end{proof}
+
+\ee
+
+\end{document}

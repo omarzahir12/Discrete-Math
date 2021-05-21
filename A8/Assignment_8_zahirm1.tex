@@ -1,0 +1,224 @@
+\documentclass[11pt,fleqn]{article}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning,arrows}
+\usepackage{diagbox}
+\usepackage{stackrel}
+
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\labelenumii}{\theenumii.}
+\renewcommand{\labelenumiii}{\theenumiii.}
+\newcommand{\be}{\begin{enumerate}}
+	\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bi}{\begin{itemize}}
+	\newcommand{\ei}{\end{itemize}}
+\newcommand{\bc}{\begin{center}}
+	\newcommand{\ec}{\end{center}}
+\newcommand{\bsp}{\begin{sloppypar}}
+	\newcommand{\esp}{\end{sloppypar}}
+\newcommand{\mname}[1]{\mbox{\sf #1}}
+\newcommand{\sB}{\mbox{$\cal B$}}
+\newcommand{\sC}{\mbox{$\cal C$}}
+\newcommand{\sF}{\mbox{$\cal F$}}
+\newcommand{\sM}{\mbox{$\cal M$}}
+\newcommand{\sP}{\mbox{$\cal P$}}
+\newcommand{\sV}{\mbox{$\cal V$}}
+\newcommand{\set}[1]{{\{ #1 \}}}
+\newcommand{\Neg}{\neg} 
+\ifdefined \And 
+\renewcommand{\And}{\wedge}
+\else
+\newcommand{\And}{\wedge}
+\fi
+\newcommand{\Or}{\vee}
+\newcommand{\Implies}{\Rightarrow}
+\newcommand{\Iff}{\Leftrightarrow}
+\newcommand{\Forall}{\forall}
+\newcommand{\ForallApp}{\forall\,}
+\newcommand{\Forsome}{\exists}
+\newcommand{\ForsomeApp}{\exists\,}
+\newcommand{\mdot}{\mathrel.}
+\newcommand{\der}[2]{\stackrel[#2]{#1}{\longrightarrow}}
+\newcommand{\nt}[1]{\seq{\texttt{#1}}}
+\newcommand{\seq}[1]{{\langle #1 \rangle}}
+\newcommand{\sglsp}{\ }
+\newcommand{\dblsp}{\ \ }
+\newenvironment{proof}{\par\noindent{\bf Proof\sglsp}}{\hfill$\Box$}
+\newcommand{\pnote}[1]{{\langle \text{#1} \rangle}}
+
+\begin{document}
+	
+	\begin{center}
+		
+		{\large \textbf{COMPSCI/SFWRENG 2FA3}}\\[2mm]
+		{\large \textbf{Discrete Mathematics with Applications II}}\\[2mm]
+		{\large \textbf{Winter 2021}}\\[8mm]
+		{\huge \textbf{Assignment 8 with Solutions}}\\[6mm]
+		{\large \textbf{Dr.~William M. Farmer and Dr.~Mehrnoosh Askarpour}}\\[2mm]
+		{\large \textbf{McMaster University}}\\[6mm]
+		{\large Revised: March 28, 2021}
+		
+	\end{center}
+	
+	\medskip
+	
+	Assignment 8 consists of two problems.  You must write your solutions
+	to the problems using LaTeX.
+	
+	Please submit Assignment~8 as two files,
+	\texttt{Assignment\_8\_\emph{YourMacID}.tex} and
+	\texttt{Assignment\_8\_\emph{YourMacID}.pdf}, to the Assignment~8
+	folder on Avenue under Assessments/Assignments.
+	\texttt{\emph{YourMacID}} must be your personal MacID (written without
+	capitalization).  The \texttt{Assignment\_8\_\emph{YourMacID}.tex}
+	file is a copy of the LaTeX source file for this assignment
+	(\texttt{Assignment\_8.tex} found on Avenue under
+	Contents/Assignments) with your solution entered after each problem.
+	The \texttt{Assignment\_8\_\emph{YourMacID}.pdf} is the PDF output
+	produced by executing
+	
+	\begin{itemize}
+		
+		\item[] \texttt{pdflatex Assignment\_8\_\emph{YourMacID}}
+		
+	\end{itemize}
+	
+	This assignment is due \textbf{Sunday, March 28, 2021 before
+		midnight.}  You are allow to submit the assignment multiple times,
+	but only the last submission will be marked.  \textbf{Late submissions
+		and files that are not named exactly as specified above will not be
+		accepted!}  It is suggested that you submit your preliminary
+	\texttt{Assignment\_8\_\emph{YourMacID}.tex} and
+	\texttt{Assignment\_8\_\emph{YourMacID}.pdf} files well before the
+	deadline so that your mark is not zero if, e.g., your computer fails
+	at 11:50 PM on March 28.
+	
+	\textbf{Although you are allowed to receive help from the
+		instructional staff and other students, your submission must be your
+		own work.  Copying will be treated as academic dishonesty! If any of
+		the ideas used in your submission were obtained from other students
+		or sources outside of the lectures and tutorials, you must
+		acknowledge where or from whom these ideas were obtained.}
+	
+	\newpage
+	
+	\subsection*{Problems}
+	
+	\be
+	
+	\item  Construct PDAs for the languages below. For each language, if it is deterministic CFL, then define a DPDA, otherwise an NPDA.
+	\be
+	\item\textbf{[5 points]} $L = \{a^nb^m \mid 1 \le n \le m \}
+$
+	\item\textbf{[5 points]} $L = \{a^nb^m \mid 1 \le n < m \}$
+	\item\textbf{[5 points]} $L = \{a^nb^m \mid 1 \le m \le n \}$
+	\item\textbf{[5 points]} $L = \{a^nb^m \mid 1 \le m < n \}$ 
+	\ee
+	\textcolor{blue}{\textbf{Mohammad Omar Zahir, zahirm1, 28 March, 2021}}
+	\be
+	\item $M=(\{q_0,q_1,q_2\},\{a,b\},\{\perp,A\},\delta,q_0,\perp,q_2)\mname{ which accepts the language by final state}\\
+	        \mname{where }\delta =\\
+	        ((q_0,a,\perp)(q_0,A\perp))\\
+	        ((q_0,a,A)(q_0,AA))\\
+	        ((q_0,b,A)(q_1,\epsilon))\\
+	        ((q_1,b,A)(q_1,\epsilon))\\
+	        ((q_1,\epsilon,\perp)(q_2,\perp))\\
+	        ((q_2,b,\perp)(q_2,\perp))
+	$
+	\begin{center}
+        \begin{tikzpicture}[]
+            \node[initial,thick,state] at (-3.825,0.175) (056153be) {$q_0$};
+            \node[thick,state] at (0.35,0.15) (7b0a6146) {$q_1$};
+            \node[thick,accepting,state] at (4.4,0.175) (05448867) {$q_2$};
+            \path[->, thick, >=stealth]
+            (056153be) edge [below,in = 180, out = 0] node {$b,A/\epsilon$} (7b0a6146)
+            (056153be) edge [loop,min distance = 1.25cm,above,in = 121, out = 59] node {$a,\perp/A\perp$} (056153be)
+            (056153be) edge [loop,min distance = 1.36cm,below,in = -58, out = -123] node {$a,A/AA$} (056153be)
+            (7b0a6146) edge [below,in = -178, out = -1] node {$\epsilon,\perp/\perp$} (05448867)
+            (7b0a6146) edge [loop,min distance = 1.25cm,above,in = 121, out = 59] node {$b,A/\epsilon$} (7b0a6146)
+            (05448867) edge [loop,min distance = 1.25cm,above,in = 121, out = 59] node {$b,\perp/\perp$} (05448867)
+            ;
+        \end{tikzpicture}
+    \end{center}
+	\item $M=(\{q_0,q_1,q_2\},\{a,b\},\{\perp,A\},\delta,q_0,\perp,q_2)\mname{ which accepts the language by final state}\\
+	        \mname{where }\delta =\\
+	        ((q_0,a,\perp)(q_0,A\perp))\\
+	        ((q_0,a,A)(q_0,AA))\\
+	        ((q_0,b,A)(q_1,\epsilon))\\
+	        ((q_1,b,A)(q_1,\epsilon))\\
+	        ((q_1,b,\perp)(q_2,\perp))\\
+	        ((q_2,b,\perp)(q_2,\perp))
+	$
+	\begin{center}
+        \begin{tikzpicture}[]
+            \node[initial,thick,state] at (-3.825,0.175) (056153be) {$q_0$};
+            \node[thick,state] at (0.35,0.15) (7b0a6146) {$q_1$};
+            \node[thick,accepting,state] at (4.4,0.175) (05448867) {$q_2$};
+            \path[->, thick, >=stealth]
+            (056153be) edge [below,in = 180, out = 0] node {$b,A/\epsilon$} (7b0a6146)
+            (056153be) edge [loop,min distance = 1.25cm,above,in = 121, out = 59] node {$a,\perp/A\perp$} (056153be)
+            (056153be) edge [loop,min distance = 1.36cm,below,in = -58, out = -123] node {$a,A/AA$} (056153be)
+            (7b0a6146) edge [below,in = -178, out = -1] node {$b,\perp/\perp$} (05448867)
+            (7b0a6146) edge [loop,min distance = 1.25cm,above,in = 121, out = 59] node {$b,A/\epsilon$} (7b0a6146)
+            (05448867) edge [loop,min distance = 1.25cm,above,in = 121, out = 59] node {$b,\perp/\perp$} (05448867)
+            ;
+        \end{tikzpicture}
+    \end{center}
+	\item $M=(\{q_0,q_1,q_2,q_3\},\{a,b\},\{\perp,A\},\delta,q_0,\perp,q_2)\mname{ which accepts the language by final state}\\
+	        \mname{where }\delta =\\
+	        ((q_0,a,\perp)(q_1,A\perp))\\
+	        ((q_1,a,A)(q_1,AA))\\
+	        ((q_1,b,A)(q_2,\epsilon))\\
+	        ((q_2,b,A)(q_2,\epsilon))\\
+	        ((q_2,b,\perp)(q_3,\perp))\\
+	$
+	\begin{center}
+        \begin{tikzpicture}[]
+            \node[initial,thick,state] at (-3.7,0.4) (ef84ca8e) {$q_0$};
+            \node[thick,state] at (0.025,0.375) (13935239) {$q_1$};
+            \node[thick,accepting,state] at (3.75,0.325) (81f892fa) {$q_2$};
+            \node[thick,state] at (7.3625,0.3125) (3b2b6fd1) {$q_{3}$};
+            \path[->, thick, >=stealth]
+            (ef84ca8e) edge [above,in = 178, out = 2] node {$a,\perp/A\perp$} (13935239)
+            (13935239) edge [above,in = 178, out = 0] node {$b,A/\epsilon$} (81f892fa)
+            (13935239) edge [loop,min distance = 1.25cm,above,in = 121, out = 59] node {$a,A/AA$} (13935239)
+            (81f892fa) edge [loop,min distance = 1.25cm,above,in = 121, out = 59] node {$b,A/\epsilon$} (81f892fa)
+            (81f892fa) edge [above,in = 179, out = 0] node {$b,\perp/\perp$} (3b2b6fd1)
+            ;
+        \end{tikzpicture}
+    \end{center}
+	\item $M=(\{q_0,q_1,q_2,q_3\},\{a,b\},\{\perp,A\},\delta,q_0,\perp,q_2)\mname{ which accepts the language by final state}\\
+	        \mname{where }\delta =\\
+	        ((q_0,a,\perp)(q_1,\perp))\\
+	        ((q_1,a,\perp)(q_1,A\perp))\\
+	        ((q_1,a,A)(q_1,AA))\\
+	        ((q_1,b,A)(q_2,\epsilon))\\
+	        ((q_2,b,A)(q_2,\epsilon))\\
+	        ((q_2,b,\perp)(q_3,\perp))\\
+	$
+    \begin{center}
+        \begin{tikzpicture}[]
+            \node[initial,thick,state] at (-3.7,0.4) (01db86ce) {$q_0$};
+            \node[thick,state] at (0.025,0.375) (0d91c5de) {$q_1$};
+            \node[thick,accepting,state] at (3.75,0.325) (8d9c5908) {$q_2$};
+            \node[thick,state] at (7.3625,0.3125) (e8735d50) {$q_{3}$};
+            \path[->, thick, >=stealth]
+            (01db86ce) edge [above,in = 178, out = 2] node {$a,\perp/\perp$} (0d91c5de)
+            (0d91c5de) edge [above,in = 178, out = 0] node {$b,A/\epsilon$} (8d9c5908)
+            (0d91c5de) edge [loop,min distance = 1.25cm,above,in = 121, out = 59] node {$a,\perp/A\perp$} (0d91c5de)
+            (0d91c5de) edge [loop,min distance = 1.36cm,below,in = -57, out = -122] node {$a,A/AA$} (0d91c5de)
+            (8d9c5908) edge [loop,min distance = 1.25cm,above,in = 121, out = 59] node {$b,A/\epsilon$} (8d9c5908)
+            (8d9c5908) edge [above,in = 179, out = 0] node {$b,\perp/\perp$} (e8735d50)
+            ;
+        \end{tikzpicture}
+    \end{center}
+	\ee 
+	\ee
+	
+\end{document}

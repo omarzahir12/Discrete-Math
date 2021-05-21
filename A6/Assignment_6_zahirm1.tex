@@ -1,0 +1,144 @@
+\documentclass[11pt,fleqn]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{color}
+
+\lstset{language=python,basicstyle=\ttfamily,breaklines=true,showspaces=false,showstringspaces=false,breakatwhitespace=true,texcl=true,escapeinside={\%*}{*)}}
+
+\setlength {\topmargin} {-.15in}
+\setlength {\textheight} {8.6in}
+
+\renewcommand{\labelenumi}{\theenumi.}
+\renewcommand{\labelenumii}{\theenumii.}
+\renewcommand{\labelenumiii}{\theenumiii.}
+\newcommand{\be}{\begin{enumerate}}
+	\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bi}{\begin{itemize}}
+	\newcommand{\ei}{\end{itemize}}
+\newcommand{\bc}{\begin{center}}
+	\newcommand{\ec}{\end{center}}
+\newcommand{\bsp}{\begin{sloppypar}}
+	\newcommand{\esp}{\end{sloppypar}}
+\newcommand{\sglsp}{\ }
+\newcommand{\dblsp}{\ \ }
+\newcommand{\mdot}{\mathrel.}
+\newcommand{\mname}[1]{\mbox{\sf #1}}
+\newcommand{\ForallApp}{\forall\,}
+\newcommand{\ImpliesAlt}{\Rightarrow}
+\newenvironment{proof}{\par\noindent{\bf Proof\sglsp}}{\hfill$\Box$}
+\newcommand{\pnote}[1]{{\langle \text{#1} \rangle}} 
+
+\begin{document}
+	
+	\begin{center}
+		
+		{\large \textbf{COMPSCI/SFWRENG 2FA3}}\\[2mm]
+		{\large \textbf{Discrete Mathematics with Applications II}}\\[2mm]
+		{\large \textbf{Winter 2021}}\\[8mm]
+		{\huge \textbf{Assignment 6}}\\[6mm]
+		{\large \textbf{Dr.~William M. Farmer and Dr.~Mehrnoosh Askarpour}}\\[2mm]
+		{\large \textbf{McMaster University}}\\[6mm]
+		{\large Revised: March 6, 2021}
+		
+	\end{center}
+	
+	\medskip
+	
+	Assignment 6 consists of two problems.  You must write your solutions
+	to the problems using LaTeX.
+	
+	Please submit Assignment~6 as two files,
+	\texttt{Assignment\_6\_\emph{YourMacID}.tex} and
+	\texttt{Assignment\_6\_\emph{YourMacID}.pdf}, to the Assignment~6
+	folder on Avenue under Assessments/Assignments.
+	\texttt{\emph{YourMacID}} must be your personal MacID (written without
+	capitalization).  The \texttt{Assignment\_6\_\emph{YourMacID}.tex}
+	file is a copy of the LaTeX source file for this assignment
+	(\texttt{Assignment\_6.tex} found on Avenue under
+	Contents/Assignments) with your solution entered after each problem.
+	The \texttt{Assignment\_6\_\emph{YourMacID}.pdf} is the PDF output
+	produced by executing
+	
+	\begin{itemize}
+		
+		\item[] \texttt{pdflatex Assignment\_6\_\emph{YourMacID}}
+		
+	\end{itemize}
+	
+	This assignment is due \textbf{Sunday, March 14, 2021 before midnight.}
+	You are allow to submit the assignment multiple times, but only the
+	last submission will be marked.  \textbf{Late submissions and files
+		that are not named exactly as specified above will not be accepted!}
+	It is suggested that you submit your preliminary
+	\texttt{Assignment\_6\_\emph{YourMacID}.tex} and
+	\texttt{Assignment\_6\_\emph{YourMacID}.pdf} files well before the
+	deadline so that your mark is not zero if, e.g., your computer fails
+	at 11:50 PM on March 14.
+	
+	\textbf{Although you are allowed to receive help from the
+		instructional staff and other students, your submission must be your
+		own work.  Copying will be treated as academic dishonesty! If any of
+		the ideas used in your submission were obtained from other students
+		or sources outside of the lectures and tutorials, you must
+		acknowledge where or from whom these ideas were obtained.}
+	
+	\newpage
+	
+	\subsection*{Background}
+	For any three regular expressions $\alpha$, $\beta$, and $\gamma$, the following properties hold:
+	\be
+	\item Commutativity of union: $ \alpha + \beta  = \beta + \alpha$
+	\item Associativity of union: $ (\alpha + \beta) + \gamma = \alpha + (\beta + \gamma)$
+	\item Associativity of concatenation: $(\alpha \beta) \gamma = \alpha (\beta  \gamma)$
+	\item Distribution of union: $ \alpha (\beta + \gamma) = \alpha \beta + \alpha  \gamma$ and $  (\beta + \gamma)\alpha =  \beta \alpha +   \gamma \alpha$.
+	\item $\emptyset$ is the identity element for union: $\alpha + \emptyset = \alpha$.
+	\item $\emptyset$ is the annihilator element for concatenation: $\alpha  \emptyset = \emptyset \alpha = \emptyset$.
+	\item $\epsilon$ is the identity element for concatenation: $\alpha  \epsilon = \alpha$.
+	\item Idempotence of Kleene star: $\alpha^{**} = \alpha^*$
+	\ee
+	
+	\subsection*{Problems}
+	
+	\be
+	
+	\item The regular expression $\alpha = (0110 + 01) (10)^*$ can be written in a more simplified way. 
+	\be
+	\item \textbf{[10 points]} By reasoning based on $L(\alpha)$, define a shorter regular expression equal to $\alpha$. Explain your reasoning.
+	\item \textbf{[10 points]} Using the properties explained above, prove that the expression you came up with in (a), is indeed equal to $\alpha$.
+	\ee
+	
+	\bigskip
+	
+	\textcolor{blue}{\textbf{Mohammad Omar Zahir, zahirm1, March 14, 2020}}
+
+\ee
+    \be
+    \item The answers for part a and b are below.
+    \medskip 
+        \be
+            \item 
+            From the above we can see that $\alpha$ is equivalent to $(0110 + 01) (10)^*$, which can be expanded to the form $(0110 (10)^* + 01(10)^*)$ using the distributivity of union. If we now apply the property of the Kleene Star for both these sets, which represents an arbitrary number of $10$ following their respective start, we can then get the following language set $L(\alpha) = (0110, 011010, 01101010 ...)+(01, 0110, 011010, 01101010 ...)$. From the sets that have been produced, we can see that apart from the possibility of the single word $01$ in the second set, the two sets have the exact same words. Furthermore, taking the union of these two sets would produce a single set that would be equivalent to the original second set. As such, that means that we could reduce the entire original expression $\alpha = (0110 + 01) (10)^*$ to simply the second part after the union distribution, which would be $\alpha = 01(10)^*$. Again, we know this to be the case as the set represented by just the right side is equivalent to the set represented by the union of both sides. To restate, the shorter expression would be $\alpha = 01(10)^*$.
+            \item 
+            We must now prove that our simplified expression above, $\alpha = 01(10)^*$, is equivalent to the original expression $\alpha = (0110 + 01) (10)^*$.\\\\
+            \emph{Proof:}
+                $\alpha \equiv (0110 + 01) (10)^* \equiv 01(10)^*$.\\
+                We will prove the language defined by $L(\alpha) = L((0110 + 01) (10)^*)$ is equivalent to the language defined by $L(\alpha) = 01(10)^*$
+                \begin{align*}
+                  &\phantom{{}=} L((0110 + 01) (10)^*)\\
+                  &\equiv L(0110 (10)^* + 01 (10)^*) & \pnote{Distribution of Union}\\
+                  &\equiv L(01(10(10)^* + (10)^*)) & \pnote{Distribution of Union}\\
+                  &\equiv L(01(10(10)^* + ((10)^* + \epsilon))) & \pnote{Kleene Star - 9a}\\
+                  &\equiv L(01(10(10)^* + (\epsilon + (10)^*))) & \pnote{Commutativity of Union}\\
+                  &\equiv L(01((10(10)^*  + \epsilon) + (10)^*)) & \pnote{Associativity of Union}\\
+                  &\equiv L(01((10)^* + (10)^*)) & \pnote{Kleene Star - 9d}\\
+                  &\equiv L(01(10)^*) & \pnote{Kleene Star - 9b}\\
+            \end{align*}
+            Having proved that the set of language $L(\alpha)$ represented by our shorter expression $\alpha = 01(10)*$ is equivalent to the original expression $\alpha = (0110 + 01) (10)^*$, we have thus showed that the original regular expression was simplifiable and is indeed equal to the simplified version.
+        \ee
+    \ee
+\end{document}
+
+
